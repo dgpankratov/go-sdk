@@ -1,6 +1,6 @@
 # Solidgate API
 
-[![Go project version](https://badge.fury.io/go/github.com%2solidgate-tech%2go-sdk.svg)](https://badge.fury.io/go/github.com%2solidgate-tech%2go-sdk)
+[![Go project version](https://badge.fury.io/go/github.com%2Fsolidgate-tech%2Fgo-sdk.svg)](https://badge.fury.io/go/github.com%2Fsolidgate-tech%2Fgo-sdk.svg)
 
 GO SDK provides API options for integrating Solidgate’s payment orchestrator into your GO applications.
 
@@ -21,7 +21,7 @@ Check our
   </tr>
   <tr>
     <td>
-      <code>api.go/solidgate/</code> – main file for API integration<br>
+      <code>api.go</code> – main file for API integration<br>
       <code>encryption.go</code> – library for encryption-related operations<br>
       <code>entries.go</code> – contains form-related methods (e.g., form resign)<br>
       <code>go.mod</code> – dependency file for managing module imports
@@ -75,28 +75,33 @@ import (
 	solidgate "github.com/solidgate-tech/go-sdk"
 )
 
-func main() {
+func main() { 
 	//.....
+	solidgateSdk, err := solidgate.NewAPI("YourPublicKey", "YourSecretKey")
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+	
 	someRequestStruct := SomeRequestStruct{}
 	someStructJson, err := json.Marshal(someRequestStruct)
 
 	if err != nil {
 		fmt.Print(err)
+		return
 	}
 
-	solidgateSdk := solidgate.NewSolidGateApi("YourPublicKey", "YourSecretKey")
-
-	response, err := solidgateSdk.Charge(someStructJson)
-
+	response, err := solidgateSdk.Auth(someStructJson)
 	if err != nil {
 		fmt.Print(err)
+		return
 	}
 
 	someResponeStruct = SomeResponeStruct{}
-	err := json.Unmarshal(response, &someResponeStruct)
-
+	err = json.Unmarshal(response, &someResponeStruct)
 	if err != nil {
 		fmt.Print(err)
+		return
 	}
 	//.....
 }
@@ -118,21 +123,25 @@ import (
 )
 
 func main() {
-
-	solidgateSdk := solidgate.NewSolidGateApi("YourPublicKey", "YourSecretKey")
-	someRequestStruct := SomeRequestStruct{}
-	someStructJson, err := json.Marshal(someRequestStruct)
-
+	//.....
+	solidgateSdk, err := solidgate.NewAPI("YourPublicKey", "YourSecretKey")
 	if err != nil {
 		fmt.Print(err)
+		return
+	}
+
+	someRequestStruct := SomeRequestStruct{}
+	someStructJson, err := json.Marshal(someRequestStruct)
+	if err != nil {
+		fmt.Print(err)
+		return
 	}
 
 	formInitDto, err := solidgateSdk.FormMerchantData(someStructJson)
-
 	if err != nil {
 		fmt.Print(err)
+		return
 	}
-
 	// ...
 }
 
@@ -157,20 +166,25 @@ type UpdateParams struct {
 }
 
 func main() {
-	solidgateSdk := solidgate.NewSolidGateApi("YourPublicKey", "YourSecretKey")
+	//.....
+	solidgateSdk, err := solidgate.NewAPI("YourPublicKey", "YourSecretKey")
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+	
 	someRequestStruct := UpdateParams{}
 	someStructJson, err := json.Marshal(someRequestStruct)
-
 	if err != nil {
 		fmt.Print(err)
+		return
 	}
-
+	
 	formUpdateDto, err := solidgateSdk.FormUpdate(someStructJson)
-
 	if err != nil {
 		fmt.Print(err)
+		return
 	}
-
 	// ...
 }
 
@@ -191,21 +205,25 @@ import (
 )
 
 func main() {
-
-	solidgateSdk := solidgate.NewSolidGateApi("YourPublicKey", "YourSecretKey")
-	someRequestStruct := SomeRequestStruct{}
-	someStructJson, err := json.Marshal(someRequestStruct)
-
+	//.....
+	solidgateSdk, err := solidgate.NewAPI("YourPublicKey", "YourSecretKey")
 	if err != nil {
 		fmt.Print(err)
+		return
+	}
+   
+	someRequestStruct := SomeRequestStruct{}
+	someStructJson, err := json.Marshal(someRequestStruct)
+	if err != nil {
+		fmt.Print(err)
+		return
 	}
 
 	formResignDto, err := solidgateSdk.FormResign(someStructJson)
-
 	if err != nil {
 		fmt.Print(err)
+		return
 	}
-
 	// ...
 }
 
